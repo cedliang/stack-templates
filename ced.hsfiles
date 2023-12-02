@@ -1,15 +1,6 @@
 {-# START_FILE package.yaml #-}
 name: {{name}}
 version: 0.1.0.0
-license: BSD3
-author: "Cedric Liang"
-maintainer: "cedric@cedric.app"
-copyright: "2022 Cedric Liang"
-
-synopsis: INSERT HERE
-category: INSERT HERE
-
-description: Please see the README on GitHub.
 
 dependencies:
   - base >= 4.7 && < 5
@@ -19,18 +10,22 @@ library:
   verbatim:
     default-language: GHC2021
 
+_exe-defs: &exe-defaults
+  dependencies:
+    - {{name}}
+  ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    - -Wall
+  verbatim:
+    default-language: GHC2021
+
 executables:
   {{name}}-exe:
+    <<: *exe-defaults
     main: Main.hs
     source-dirs: app
-    ghc-options:
-      - -threaded
-      - -rtsopts
-      - -with-rtsopts=-N
-    dependencies:
-      - {{name}}
-    verbatim:
-      default-language: GHC2021
 
 {-# START_FILE .gitignore #-}
 .stack-work/
@@ -40,7 +35,7 @@ executables:
 .DS_Store
 
 {-# START_FILE stack.yaml #-}
-resolver: nightly-2022-08-04
+resolver: nightly-2023-12-01
 packages:
   - .
 
